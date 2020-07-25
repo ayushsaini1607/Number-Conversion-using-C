@@ -144,4 +144,55 @@ void decimal_to_octal(float num)
      }
 }
 
+void binary_to_decimal(char num[])
+{
+	int i,j,c=0,temp,sum=0;
+	double dec=0.0;
+	//Validating input
+	for(i=0;num[i]!='\0';i++){
+		if(num[i]!='0' && num[i]!='1' && num[i]!='.'){
+		    printf("\nInvalid input");
+		    return;
+	     }
+	    if(num[i]=='.')
+	       c++;
+	}
+   if(c>1)
+     {
+     	printf("\nInvalid Input");
+     	return;
+     }
+    
+    //storing the position of point
+   for(i=0;num[i]!='\0';i++)
+     {
+     	if(num[i]=='.')
+	       break;
+     }
+    j=i;
+    i--;
+    c=0;
+    while(i>=0){
+        if(num[i]=='1'){
+          	sum=sum+pow(2.0,c);
+         }
+        c++;
+        i--;
+   }
+   dec=sum;
+   if(j!=strlen(num)){
+      j++;
+      i=-1;
+      while(num[j]!='\0')
+       {
+       	if(num[j]=='1'){
+       		dec=dec+pow(2,i);
+       	}
+       	i--;
+       	j++;
+       }
+    }
+   printf("\nDecimal Equivalent: %f",dec);
+}
+
 
