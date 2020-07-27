@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<math.h>
-#include<strig.h>
+#include<string.h>
 
 void decimal_to_binary(float);
 void decimal_to_octal(float);
@@ -39,6 +39,41 @@ int main()
             break;
 	}
    return 0;
+}
+
+void decimal_to_binary(float num)
+{
+    int rem[32],c=0,i,integer=(int)num;
+    float decimal;
+    char b[64];
+    decimal=num-integer;     ///stores decimal part of the entered no
+	while(integer!=0){
+		rem[c]=integer%2;
+		integer/=2;
+	    c++;
+	}    //calculating binary value for integer part;contains in reverse order as of now
+	c--; //reduction of count to keep the count of index
+   for(i=0;c>=0;c--,i++)
+    {
+    	b[i]=rem[c]+48;
+    }      //storing the binary value for integer part in a character array
+    b[i]='.';  //decimal part starts here,allocation of decimal point with this step
+    i++;
+    //code for binary value of decimal part
+    c=0;
+    while(c<10){      
+	    decimal=decimal-(int)decimal;       
+    	decimal=decimal*2;
+    	b[i]=(int)decimal+48;
+    	i++;
+    	c++;
+    }
+    b[i]='\0';
+    printf("\nBinary Equivalent: ");
+   for(i=0;b[i]!='\0';i++)
+     {
+     	printf("%c",b[i]);
+     }
 }
 
 void decimal_to_hexadecimal(float num)
@@ -83,7 +118,7 @@ void decimal_to_hexadecimal(float num)
 	while(integer!=0){
 		rem[c]=integer%16;
 		integer/=16;
-	    c++;
+	    c++;   //stores the  no of digits
 	}     //calculating heaxdecimal value for integer part
 	c--;  //reduction of count to keep the count of index
    for(i=0;c>=0;c--,i++)
@@ -95,11 +130,11 @@ void decimal_to_hexadecimal(float num)
     //code for binary value of decimal part
     c=0;
     while(c<10){      
-	    decimal=decimal-(int)decimal;       
-    	decimal=decimal*16;
-    	b[i]=h[(int)decimal].hex;
-    	i++;
-    	c++;
+	    decimal=decimal-(int)decimal;       //extracting only the fractional part of the result on multiplication by 16
+    	decimal=decimal*16;                  
+    	b[i]=h[(int)decimal].hex;            //accesing the structure's hexadecimal value from the integer part to store the value in final result
+    	i++;                                 //i is the iterator for final result's index
+    	c++;                                 //iterator for current loop
     }
     b[i]='\0';
     printf("\nHexadecimal Equivalent: ");
