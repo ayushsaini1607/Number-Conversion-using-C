@@ -7,22 +7,23 @@ void decimal_to_octal(float);
 void decimal_to_hexadecimal(float);
 
 void binary_to_decimal(char []);
-void binary_to_octal(char []);
-void binary_to_hexadecimal(char []);
+void hexadecimal_to_decimal(char []);
+void octal_to_decimal(char []);
 
 int main()
 {
 	int ch;
+	float no;
+	char num[32];
 	printf("\nNumber conversion\n");
 	printf("\nEnter input type from options below: ");
-	printf("\n1.Decimal");
-	printf("\n2.Binary");
-	printf("\n3.Octal");
-	printf("\n4.Hexadecimal");
+	printf("\n1.Decimal to binary,octal and hexadecimal");
+	printf("\n2.Binary to decimal");
+	printf("\n3.Octal to decimal");
+	printf("\n4.Hexadecimal to decimal");
 	scanf("%d",&ch);
 	switch(ch){
 		case 1:
-			float no;
          	printf("\n Enter a number: ");
 	        scanf("%f",&no);
 	        decimal_to_binary(no);
@@ -30,12 +31,10 @@ int main()
 	        decimal_to_hexadecimal(no);
 	        break;
 	    case 2:
-	    	char no[64];
 	        printf("\nEnter number in binary format(0s and 1s only): ");
-	        gets(no);
-            binary_to_decimal(no);
-            binary_to_octal(no);
-            binary_to_hexadecimal(no);
+			fflush(stdin);
+	        gets(num);
+            binary_to_decimal(num);
             break;
 	}
    return 0;
@@ -44,9 +43,9 @@ int main()
 void decimal_to_binary(float num)
 {
     int rem[32],c=0,i,integer=(int)num;
-    float decimal;
+    float fraction;
     char b[64];
-    decimal=num-integer;     ///stores decimal part of the entered no
+    fraction=num-integer;     ///stores decimal part of the entered no
 	while(integer!=0){
 		rem[c]=integer%2;
 		integer/=2;
@@ -62,9 +61,9 @@ void decimal_to_binary(float num)
     //code for binary value of decimal part
     c=0;
     while(c<10){      
-	    decimal=decimal-(int)decimal;       
-    	decimal=decimal*2;
-    	b[i]=(int)decimal+48;
+	    fraction=fraction-(int)fraction;       
+    	fraction=fraction*2;
+    	b[i]=(int)fraction+48;
     	i++;
     	c++;
     }
@@ -83,9 +82,9 @@ void decimal_to_hexadecimal(float num)
 		char hex;
 	}h[16];
 	int rem[64],c=0,i,integer=(int)num;
-    float decimal;
+    float fraction;
     char b[64];
-    decimal=num-integer;
+    fraction=num-integer;
     for(i=0;i<16;i++)
     {
     	h[i].dec=i;
@@ -130,9 +129,9 @@ void decimal_to_hexadecimal(float num)
     //code for binary value of decimal part
     c=0;
     while(c<10){      
-	    decimal=decimal-(int)decimal;       //extracting only the fractional part of the result on multiplication by 16
-    	decimal=decimal*16;                  
-    	b[i]=h[(int)decimal].hex;            //accesing the structure's hexadecimal value from the integer part to store the value in final result
+	    fraction=fraction-(int)fraction;       //extracting only the fractional part of the result on multiplication by 16
+    	fraction=fraction*16;                  
+    	b[i]=h[(int)fraction].hex;            //accesing the structure's hexadecimal value from the integer part to store the value in final result
     	i++;                                 //i is the iterator for final result's index
     	c++;                                 //iterator for current loop
     }
@@ -147,9 +146,9 @@ void decimal_to_hexadecimal(float num)
 void decimal_to_octal(float num)
 {
 	int rem[64],c=0,i,integer=(int)num;
-    float decimal;
+    float fraction;
     char b[64];
-    decimal=num-integer;
+    fraction=num-integer;
 	while(integer!=0){
 		rem[c]=integer%8;
 		integer/=8;
@@ -165,9 +164,9 @@ void decimal_to_octal(float num)
     //code for binary value of decimal part
     c=0;
     while(c<10){      
-	    decimal=decimal-(int)decimal;       
-    	decimal=decimal*8;
-    	b[i]=(int)decimal+48;
+	    fraction=fraction-(int)fraction;       
+    	fraction=fraction*8;
+    	b[i]=(int)fraction+48;
     	i++;
     	c++;
     }
