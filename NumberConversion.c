@@ -20,7 +20,7 @@ int main()
 	printf("\n1.Decimal to binary,octal and hexadecimal");
 	printf("\n2.Binary to decimal");
 	printf("\n3.Octal to decimal");
-	printf("\n4.Hexadecimal to decimal");
+	printf("\n4.Hexadecimal to decimal\n");
 	scanf("%d",&ch);
 	switch(ch){
 		case 1:
@@ -36,6 +36,20 @@ int main()
 	        gets(num);
             binary_to_decimal(num);
             break;
+	    case 3: 
+		    printf("\nEnter no to convert from octal to decimal : ");
+            fflush(stdin);
+            gets(num);
+            octal_to_decimal(num);
+			break;
+        case 4:
+             printf("\nEnter no to convert from hexadecimal to decimal: ");
+             fflush(stdin);
+             gets(num);
+             hexadecimal_to_decimal(num);
+             break;
+        default: 
+		       printf("\n Invalid choice!");
 	}
    return 0;
 }
@@ -178,10 +192,171 @@ void decimal_to_octal(float num)
      }
 }
 
+void octal_to_decimal(char num[])
+{
+    int i,j,dot_count=0,c,sum=0;
+    double res=0.0,temp;  //to store the fractional part of the result and then adding integer part to it to produce final result
+
+    /*validating input withj ascii value check from 0 to 7 and checking number of decimal points*/
+    for(i=0;num[i]!='\0';i++)
+      {
+          if((int)num[i]<48 || (int)num[i]>55)
+		     if(num[i]!='.')   
+             {
+                 printf("\nInvalid Input");
+                 return;      
+             }
+          if(num[i]=='.')            
+               dot_count++;     //to store no of decimal points(in case user has entered more than one)
+      }
+    if(dot_count>1)
+    {
+       printf("\nInvalid Input");
+       return;
+    }
+    for(i=0;num[i]!='\0';i++)
+      if(num[i]=='.')
+         break;
+ //i now has the position of decimal point in the user entered value
+    j=i;                          //copying the value of i to j for later use
+    i--;
+    c=0;                 //keeps the count of power of 8
+    /*storing the decimal equivalent of part before decimal point in variable sum*/
+    while(i>=0)
+     {
+     	 temp=num[i]-'0';    //temp extracting integer value from string
+     	 temp= temp*pow(8,c);       //temp multiplied with required power of 8
+         sum = sum + temp;
+         c++;
+         i--;
+     }
+      res=sum;    //store floating type value of sum in res
+     /*if the value of j is equal to the length of the string entered by the user then there is no decimal point
+       else the value of j is the position of the decimal point in the string.*/
+     if(j!=strlen(num))
+      {
+          j++;      //inccrementing j so that it now holds the index of the number right after decimal point
+          c=-1;      //negative powers after decimal point
+
+          /*the decimal equivalent of the fractional part of the entered no is stored in a variable res of double type*/
+          while(num[j]!='\0')
+            {
+                temp=num[j]-'0';
+                temp=temp*pow(8.0,c);
+                res=res+temp;
+                c--;    //negative power value decreasing
+                j++;    //loop counter increasing upto the end of the string
+            }
+      }
+      printf("\nDecimal Equivalent: %f",res);
+}
+
+void hexadecimal_to_decimal(char num[])
+{
+    char ch;
+    int i,j,dot_count=0,c,sum=0,z;
+    double res=0.0,temp;  //to store the fractional part of the result and then adding integer part to it to produce final result
+    for(i=0;num[i]!='\0';i++)
+      {
+         if((int)num[i]<48 || (int)num[i]>57)
+             if(num[i]<'A' || num[i]>'F')
+		        if(num[i]!='.')   
+                  {
+                 printf("\nInvalid Input");
+                 return;      
+                  }
+          if(num[i]=='.')            
+               dot_count++;     //to store no of decimal points(in case user has entered more than one)
+      }
+    if(dot_count>1)
+     {
+       printf("\nInvalid Input");
+       return;
+     }
+    for(i=0;num[i]!='\0';i++)
+      if(num[i]=='.')
+         break;
+    //i now has the position of decimal point in the user entered value
+    j=i;                          //copying the value of i to j for later use
+    i--;
+    c=0;                 //keeps the count of power of 16
+    while(i>=0)
+    {
+       if(num[i]>=48 && num[i]<=57)            //for numbers 0 to 9
+             z=num[i]-'0';
+       else if(num[i]>='A' && num[i]<='F')       //for numbers 10 to 15
+           switch(num[i])
+            {
+                  case 'A':
+                          z=10;
+                          break;
+                  case 'B':
+                           z=11;
+                           break;
+                  case 'C': 
+                           z=12;
+                           break;
+                  case 'D':
+                           z=13;
+                           break;
+                  case 'E':
+                           z=14;
+                           break;
+                  case 'F':
+                            z=15;
+                            break;
+            }
+         z=z*pow(16,c);
+         sum=sum+z;
+         c++;
+         i--;
+      }
+     res=sum;
+     if(j!=strlen(num))
+      {
+          j++;      //incrementing j so that it now holds the index of the number right after decimal point
+          c=-1;      //negative powers after decimal point
+
+          /*the decimal equivalent of the fractional part of the entered no is stored in a variable res of double type*/
+          while(num[j]!='\0')
+            {
+                if(num[j]>=48 && num[j]<=57)             //for numbers from 0 to 9
+                   temp=num[i]-'0';
+               else if(num[j]>='A' && num[j]<='F')          //for numbers from 10 to 15
+           switch(num[j])
+            {
+                  case 'A':
+                          temp=10;
+                          break;
+                  case 'B':
+                           temp=11;
+                           break;
+                  case 'C': 
+                           temp=12;
+                           break;
+                  case 'D':
+                           temp=13;
+                           break;
+                  case 'E':
+                           temp=14;
+                           break;
+                  case 'F':
+                            temp=15;
+                            break;
+            }
+                temp=temp*pow(16.0,c);
+                res=res+temp;
+                c--;    //negative power value decreasing
+                j++;    //loop counter increasing upto the end of the string
+            }
+      }
+      printf("\nDecimal Equivalent: %f",res);
+}
+
 void binary_to_decimal(char num[])
 {
-	int i,j,c=0,temp,sum=0;
-	double dec=0.0;
+	int i,j,c=0,sum=0;
+	double res=0.0;
 	//Validating input
 	for(i=0;num[i]!='\0';i++){
 		if(num[i]!='0' && num[i]!='1' && num[i]!='.'){
@@ -213,20 +388,20 @@ void binary_to_decimal(char num[])
         c++;
         i--;
    }
-   dec=sum;
+   res=sum;
    if(j!=strlen(num)){
       j++;
       i=-1;
       while(num[j]!='\0')
        {
        	if(num[j]=='1'){
-       		dec=dec+pow(2,i);
+       		res=res+pow(2,i);
        	}
        	i--;
        	j++;
        }
     }
-   printf("\nDecimal Equivalent: %f",dec);
+   printf("\nDecimal Equivalent: %f",res);
 }
 
 
