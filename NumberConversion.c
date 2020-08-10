@@ -242,7 +242,7 @@ double octal_to_decimal(char num[])
 		     if(num[i]!='.')   
              {
                  printf("\nInvalid Input");
-                 return;      
+                 return 0;      
              }
           if(num[i]=='.')            
                dot_count++;     //to store no of decimal points(in case user has entered more than one)
@@ -250,7 +250,7 @@ double octal_to_decimal(char num[])
     if(dot_count>1)
     {
        printf("\nInvalid Input");
-       return;
+       return 0;
     }
     for(i=0;num[i]!='\0';i++)
       if(num[i]=='.')
@@ -302,7 +302,7 @@ double hexadecimal_to_decimal(char num[])
 		        if(num[i]!='.')   
                   {
                  printf("\nInvalid Input");
-                 return;      
+                 return 0;      
                   }
           if(num[i]=='.')            
                dot_count++;     //to store no of decimal points(in case user has entered more than one)
@@ -310,7 +310,7 @@ double hexadecimal_to_decimal(char num[])
     if(dot_count>1)
      {
        printf("\nInvalid Input");
-       return;
+       return 0;
      }
     for(i=0;num[i]!='\0';i++)
       if(num[i]=='.')
@@ -401,7 +401,7 @@ double binary_to_decimal(char num[])
 	for(i=0;num[i]!='\0';i++){
 		if(num[i]!='0' && num[i]!='1' && num[i]!='.'){
 		    printf("\nInvalid input");
-		    return;
+		    return 0;
 	     }
 	    if(num[i]=='.')
 	       c++;
@@ -409,7 +409,7 @@ double binary_to_decimal(char num[])
    if(c>1)
      {
      	printf("\nInvalid Input");
-     	return;
+     	return 0;
      }
     
     //storing the position of point
