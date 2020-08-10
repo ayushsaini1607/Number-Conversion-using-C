@@ -2,9 +2,9 @@
 #include<math.h>
 #include<string.h>
 
-char* decimal_to_binary(float);
-char* decimal_to_octal(float);
-char* decimal_to_hexadecimal(float);
+void decimal_to_binary(float,char[]);
+void decimal_to_octal(float,char[]);
+void decimal_to_hexadecimal(float,char[]);
 
 double binary_to_decimal(char []);
 double hexadecimal_to_decimal(char []);
@@ -15,7 +15,7 @@ int main()
 	int ch,opt;   //switch case and do while variables
   float no;
 	char num[32];   //input
-  char *res;   //computed output
+  char res[32];   //computed output
   double result;   //computed output
   do{
 	  printf("\nNumber conversion\n");
@@ -29,13 +29,13 @@ int main()
 		  case 1:
          	printf("\n Enter a number: ");
 	        scanf("%f",&no);
-	        res=decimal_to_binary(no);
+	        decimal_to_binary(no,res);
           printf("\nBinary equivalent : %s",res);
           strcpy(res,"");
-	        res=decimal_to_octal(no);
+	        decimal_to_octal(no,res);
           printf("\nOctal equivalent : %s",res);
           strcpy(res,"");
-	        res=decimal_to_hexadecimal(no);
+	        decimal_to_hexadecimal(no,res);
           printf("\nHexadecimal equivalent : %s",res);
           strcpy(res,"");
 	        break;
@@ -46,10 +46,10 @@ int main()
 	        gets(num);
           result=binary_to_decimal(num);
           printf("\nDecimal Equivalent : %f",result);
-          res=decimal_to_octal(result);
+          decimal_to_octal(result,res);
           printf("\nOctal Equivalent : %s",res);
           strcpy(res,"");
-          res=decimal_to_hexadecimal(result);
+          decimal_to_hexadecimal(result,res);
           printf("\nHexadecimal Equivalent : %s",res);
           strcpy(res,"");
           break;
@@ -60,10 +60,10 @@ int main()
             gets(num);
             result=octal_to_decimal(num);
             printf("\nDecimal Equivalent: %f",result);
-            res=decimal_to_binary(result);
+            decimal_to_binary(result,res);
             printf("\nBinary Equivalent : %s",res);
             strcpy(res,"");
-            res=decimal_to_hexadecimal(result);
+            decimal_to_hexadecimal(result,res);
             printf("\nHexadecimal Equivalent : %s",res);
             strcpy(res,"");
 			      break;
@@ -74,10 +74,10 @@ int main()
              gets(num);
              result=hexadecimal_to_decimal(num);
              printf("\nDecimal Equivalent : %f",result);
-             res=decimal_to_binary(result);
+             decimal_to_binary(result,res);
              printf("\nBinary Equivalent : %s",res);
              strcpy(res,"");
-             res=decimal_to_octal(result);
+             decimal_to_octal(result,res);
              printf("\nOctal Eqivalent : %s",res);
              strcpy(res,"");
              break;
@@ -90,11 +90,10 @@ int main()
    return 0;
 }
 
-char* decimal_to_binary(float num)
+void decimal_to_binary(float num,char b[])
 {
     int rem[32],c=0,i,integer=(int)num;
     float fraction;
-    char b[64];
     fraction=num-integer;     ///stores decimal part of the entered no
 	  while(integer!=0){
 		rem[c]=integer%2;
@@ -122,10 +121,9 @@ char* decimal_to_binary(float num)
      {
      	printf("%c",b[i]);
      } */
-    return b;
 }
 
-char* decimal_to_hexadecimal(float num)
+void decimal_to_hexadecimal(float num,char b[])
 {
 	struct hex{
 		int dec;
@@ -133,7 +131,6 @@ char* decimal_to_hexadecimal(float num)
 	}h[16];
 	int rem[64],c=0,i,integer=(int)num;
     float fraction;
-    char b[64];
     fraction=num-integer;
     for(i=0;i<16;i++)
     {
@@ -191,14 +188,12 @@ char* decimal_to_hexadecimal(float num)
      {
      	printf("%c",b[i]);
      } */
-    return b;
 }
 
-char* decimal_to_octal(float num)
+void decimal_to_octal(float num,char b[])
 {
 	int rem[64],c=0,i,integer=(int)num;
     float fraction;
-    char b[64];
     fraction=num-integer;
 	while(integer!=0){
 		rem[c]=integer%8;
@@ -227,7 +222,6 @@ char* decimal_to_octal(float num)
      {
      	printf("%c",b[i]);
      } */
-    return b;
 }
 
 double octal_to_decimal(char num[])
